@@ -1,0 +1,319 @@
+/* 
+ * Quanta - Physics Education Platform
+ * Profile Page Specific Styles
+ */
+
+.profile-header {
+    background-color: var(--secondary-color);
+    padding: var(--spacing-xl) 0;
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.user-details h1 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.user-status {
+    display: inline-block;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 20px;
+    font-size: var(--font-size-small);
+    margin-top: var(--spacing-xs);
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--gray-300);
+    margin-bottom: var(--spacing-lg);
+}
+
+.tab {
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.tab:hover {
+    color: var(--primary-color);
+}
+
+.tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.profile-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.progress-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.progress-title {
+    font-size: var(--font-size-medium);
+    margin-bottom: var(--spacing-md);
+}
+
+.progress-item {
+    margin-bottom: var(--spacing-md);
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xs);
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: var(--font-size-small);
+    color:#ffffff;
+}
+
+.activity-item {
+    display: flex;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+    flex-shrink: 0;
+}
+
+.activity-details {
+    flex: 1;
+}
+
+.activity-details h4 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.activity-details p {
+    color: var(--gray-600);
+    font-size: var(--font-size-small);
+}
+
+.activity-date {
+    color: var(--gray-600);
+    font-size: var(--font-size-small);
+    text-align: right;
+    white-space: nowrap;
+    margin-left: var(--spacing-md);
+}
+
+.edit-form {
+    display: none;
+}
+
+.topic-progress {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.topic-label {
+    width: 150px;
+    text-align: right;
+    margin-right: var(--spacing-md);
+}
+
+.topic-bar {
+    flex: 1;
+    height: 10px;
+    background-color: var(--gray-200);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.topic-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+}
+
+.checkbox-text {
+    flex: 1;
+}
+
+/* Dark mode adjustments */
+.dark-mode .tabs {
+    border-bottom-color: var(--gray-700);
+}
+
+.dark-mode .profile-card,
+.dark-mode .progress-card,
+.dark-mode .stat-card {
+    background-color: var(--gray-800);
+}
+
+.dark-mode .progress-bar,
+.dark-mode .topic-bar {
+    background-color: var(--gray-700);
+}
+
+.dark-mode .activity-item {
+    border-bottom-color: var(--gray-700);
+}
+
+.dark-mode .activity-icon {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+}
+
+.dark-mode .activity-details p,
+.dark-mode .activity-date,
+.dark-mode .stat-label {
+    color: var(--gray-400);
+}
+
+.dark-mode .form-control {
+    background-color: var(--gray-700);
+    color: var(--white);
+    border-color: var(--gray-600);
+}
+
+.dark-mode .user-status {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .user-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .topic-progress {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .topic-label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .topic-bar {
+        width: 100%;
+    }
+    
+    .activity-item {
+        flex-direction: column;
+    }
+    
+    .activity-icon {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .activity-date {
+        margin-left: 0;
+        margin-top: var(--spacing-xs);
+        text-align: left;
+    }
+    
+    .tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

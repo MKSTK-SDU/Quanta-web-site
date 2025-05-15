@@ -1,0 +1,145 @@
+/* 
+ * Quanta - Physics Education Platform
+ * Homepage Specific Styles
+ */
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--white);
+    padding: var(--spacing-xxl) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-link {
+    display: inline-block;
+    height: 80px; /* Подстройте под размер лого */
+    transition: transform 0.3s ease;
+  }
+  
+  .logo-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+  
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.2)"/></svg>');
+    background-size: 100px 100px;
+    opacity: 0.5;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--spacing-md);
+    animation: fadeIn 1s ease-in;
+}
+
+.hero p {
+    font-size: var(--font-size-medium);
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+    animation: fadeIn 1.5s ease-in;
+}
+
+.hero .btn {
+    animation: fadeIn 2s ease-in;
+}
+
+/* Features Section */
+.features {
+    background-color: var(--white);
+    padding: var(--spacing-xxl) 0;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.feature-card {
+    background-color: var(--gray-100);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-card h3 {
+    font-size: var(--font-size-large);
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+}
+
+/* Resources Section */
+.resources {
+    background-color: var(--background-color);
+    padding: var(--spacing-xxl) 0;
+}
+
+/* Discussions Section */
+.discussions {
+    background-color: var(--white);
+    padding: var(--spacing-xxl) 0;
+}
+
+.discussions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+.discussion-card {
+    background-color: var(--gray-100);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.discussion-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .feature-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: calc(var(--font-size-xxl) * 0.8);
+    }
+    
+    .hero p {
+        font-size: var(--font-size-normal);
+    }
+}
+
+@media (max-width: 576px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}

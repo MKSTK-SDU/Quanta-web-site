@@ -1,0 +1,63 @@
+<!-- Resource Card Component -->
+<div class="resource-card" data-id="${resource.id}">
+    <div class="resource-image">
+        <span>${typeIcon} ${resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}</span>
+    </div>
+    <div class="resource-content">
+        <span class="resource-category">${resource.category}</span>
+        <h3 class="resource-title">${resource.title}</h3>
+        <p>${truncateText(resource.description || 'No description available.', 80)}</p>
+        <div class="resource-meta">
+            <span>⭐ ${resource.rating.toFixed(1)}</span>
+            <span>👁️ ${formatNumber(resource.views)}</span>
+            <span>Updated ${formatDate(resource.updatedAt)}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Resource Card Usage Example -->
+<!--
+<script>
+// Function to create a resource card
+function createResourceCard(resource) {
+    // Map resource type to icon
+    let typeIcon = '📄'; // Default
+    switch (resource.type) {
+        case 'book': typeIcon = '📚'; break;
+        case 'video': typeIcon = '🎬'; break;
+        case 'simulation': typeIcon = '🔬'; break;
+        case 'article': typeIcon = '📄'; break;
+        case 'problem-set': typeIcon = '📝'; break;
+    }
+    
+    // Create card element from template
+    const template = document.createElement('template');
+    template.innerHTML = `
+        <div class="resource-card" data-id="${resource.id}">
+            <div class="resource-image">
+                <span>${typeIcon} ${resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}</span>
+            </div>
+            <div class="resource-content">
+                <span class="resource-category">${resource.category}</span>
+                <h3 class="resource-title">${resource.title}</h3>
+                <p>${truncateText(resource.description || 'No description available.', 80)}</p>
+                <div class="resource-meta">
+                    <span>⭐ ${resource.rating.toFixed(1)}</span>
+                    <span>👁️ ${formatNumber(resource.views)}</span>
+                    <span>Updated ${formatDate(resource.updatedAt)}</span>
+                </div>
+            </div>
+        </div>
+    `.trim();
+    
+    const card = template.content.firstChild;
+    
+    // Add click event to show details
+    card.addEventListener('click', () => {
+        showResourceDetails(resource.id);
+    });
+    
+    return card;
+}
+</script>
+-->

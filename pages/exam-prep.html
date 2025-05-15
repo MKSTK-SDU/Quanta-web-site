@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Preparation - Quanta Physics Education Platform</title>
+    <meta name="description" content="Prepare for physics exams with Quanta's AI-powered practice questions and adaptive learning system.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* Exam-specific styles */
+        .exam-header {
+            background-color: var(--secondary-color);
+            padding: var(--spacing-xl) 0;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .exam-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .exam-description {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .exam-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: var(--spacing-lg);
+        }
+        
+        .exam-sidebar {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .exam-main {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .exam-sidebar-section {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .sidebar-title {
+            font-size: var(--font-size-medium);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .topic-selector {
+            width: 100%;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .difficulty-control {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .difficulty-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .difficulty-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--gray-300);
+            outline: none;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .difficulty-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .difficulty-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .count-selector {
+            width: 100%;
+        }
+        
+        .start-test-btn {
+            width: 100%;
+            margin-top: var(--spacing-md);
+        }
+        
+        .exam-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--gray-200);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width var(--transition-normal);
+        }
+        
+        .question-card {
+            padding: var(--spacing-lg);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .question-number {
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-small);
+        }
+        
+        .question-text {
+            font-size: var(--font-size-medium);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .options-list {
+            list-style: none;
+        }
+        
+        .option-item {
+            padding: var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .option-item:hover {
+            background-color: var(--gray-100);
+        }
+        
+        .option-item.selected {
+            background-color: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+        
+        .option-item.correct {
+            background-color: rgba(40, 167, 69, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option-item.incorrect {
+            background-color: rgba(220, 53, 69, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .explanation {
+            background-color: var(--gray-100);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin-top: var(--spacing-md);
+            display: none;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-lg);
+        }
+        
+        .results-container {
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .score-display {
+            font-size: var(--font-size-xxl);
+            margin-bottom: var(--spacing-lg);
+            color: var(--primary-color);
+        }
+        
+        .results-summary {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .results-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+        
+        .topic-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .topic-label {
+            width: 150px;
+            text-align: right;
+            margin-right: var(--spacing-md);
+        }
+        
+        .topic-bar {
+            flex: 1;
+            height: 10px;
+            background-color: var(--gray-200);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .topic-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        
+        .prompt-container {
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+        }
+        
+        /* Make exam container full width on mobile */
+        @media (max-width: 768px) {
+            .exam-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">Quanta</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="library.html">Library</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="exam-prep.html" class="active">Exams</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <a href="login.html" class="btn btn-primary">Login</a>
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="library.html">Library</a></li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="exam-prep.html" class="active">Exams</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+    
+    <section class="exam-header">
+        <div class="container">
+            <h1 class="exam-title">Physics Exam Preparation</h1>
+            <p class="exam-description">Strengthen your understanding of physics concepts with our adaptive question bank. Our AI-powered system analyzes your performance and suggests questions tailored to your needs.</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <div id="exam-setup" class="exam-container">
+            <div class="exam-sidebar">
+                <div class="exam-sidebar-section">
+                    <h3 class="sidebar-title">Test Parameters</h3>
+                    <div class="form-group">
+                        <label for="topic-select" class="form-label">Topic</label>
+                        <select id="topic-select" class="form-control topic-selector">
+                            <option value="mechanics">Mechanics</option>
+                            <option value="quantum">Quantum Physics</option>
+                            <option value="electromagnetism">Electromagnetism</option>
+                            <option value="thermodynamics">Thermodynamics</option>
+                            <option value="relativity">Relativity</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group difficulty-control">
+                        <div class="difficulty-label">
+                            <label for="difficulty-slider" class="form-label">Difficulty</label>
+                            <span id="difficulty-value">3</span>
+                        </div>
+                        <input type="range" id="difficulty-slider" class="difficulty-slider" min="1" max="5" value="3">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="question-count" class="form-label">Number of Questions</label>
+                        <select id="question-count" class="form-control count-selector">
+                            <option value="5">5 questions</option>
+                            <option value="2" selected>2 questions</option>
+                            <option value="15">15 questions</option>
+                            <option value="20">20 questions</option>
+                        </select>
+                    </div>
+                    
+                    <button id="start-test-btn" class="btn btn-primary start-test-btn">Start Practice Test</button>
+                </div>
+                
+                <div class="exam-sidebar-section">
+                    <h3 class="sidebar-title">Your Progress</h3>
+                    
+                    <div id="progress-container">
+                        <!-- Progress bars will be added dynamically -->
+                        <div class="prompt-container">
+                            <p>Log in to view your topic progress.</p>
+                            <a href="login.html" class="btn btn-primary mt-md">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exam-main">
+                <div class="prompt-container">
+                    <h2>Ready to Test Your Knowledge?</h2>
+                    <p>Select your preferred topic and difficulty level, then click "Start Practice Test" to begin.</p>
+                    <p>Each question is designed to test your understanding of key physics concepts and problem-solving skills.</p>
+                    <img src="https://via.placeholder.com/600x300?text=Physics+Exam+Preparation" alt="Physics Exam Preparation" style="max-width: 100%; border-radius: 8px; margin-top: 20px;">
+                </div>
+            </div>
+        </div>
+        
+        <div id="exam-active" class="exam-container" style="display: none;">
+            <div class="exam-sidebar">
+                <div class="exam-sidebar-section">
+                    <h3 class="sidebar-title">Test Information</h3>
+                    <p><strong>Topic:</strong> <span id="test-topic">Mechanics</span></p>
+                    <p><strong>Difficulty:</strong> <span id="test-difficulty">3/5</span></p>
+                    <p><strong>Questions:</strong> <span id="test-count">10</span></p>
+                </div>
+                
+                <div class="exam-sidebar-section">
+                    <h3 class="sidebar-title">Question Navigation</h3>
+                    <div id="question-nav" class="flex flex-wrap gap-sm">
+                        <!-- Question navigation buttons will be added dynamically -->
+                    </div>
+                </div>
+                
+                <div class="exam-sidebar-section">
+                    <button id="submit-test-btn" class="btn btn-primary" style="width: 100%;">Submit Test</button>
+                </div>
+            </div>
+            
+            <div class="exam-main">
+                <div class="exam-progress">
+                    <div>
+                        <span>Question <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill" style="width: 10%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span>Time: <span id="time-counter">00:00</span></span>
+                    </div>
+                </div>
+                
+                <div id="question-container">
+                    <!-- Questions will be displayed here -->
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button id="prev-btn" class="btn btn-outline" disabled>Previous</button>
+                    <button id="next-btn" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="exam-results" class="exam-container" style="display: none;">
+            <div class="exam-sidebar">
+                <div class="exam-sidebar-section">
+                    <h3 class="sidebar-title">Test Summary</h3>
+                    <p><strong>Topic:</strong> <span id="result-topic">Mechanics</span></p>
+                    <p><strong>Difficulty:</strong> <span id="result-difficulty">3/5</span></p>
+                    <p><strong>Time Taken:</strong> <span id="result-time">05:30</span></p>
+                </div>
+                
+                <div class="exam-sidebar-section">
+                    <h3 class="sidebar-title">Actions</h3>
+                    <button id="review-answers-btn" class="btn btn-outline mb-md" style="width: 100%;">Review Answers</button>
+                    <button id="new-test-btn" class="btn btn-primary" style="width: 100%;">Take New Test</button>
+                </div>
+            </div>
+            
+            <div class="exam-main results-container">
+                <h2>Test Complete!</h2>
+                <div class="score-display">
+                    <span id="score-percentage">80%</span>
+                </div>
+                <div class="results-summary">
+                    <p>You answered <span id="correct-count">8</span> out of <span id="question-total">10</span> questions correctly.</p>
+                    <p id="performance-message">Great job! You've demonstrated a solid understanding of this topic.</p>
+                </div>
+                
+                <div class="mb-xl">
+                    <h3 class="mb-md">Recommended Resources</h3>
+                    <div id="recommended-resources" class="resource-grid">
+                        <!-- Recommended resources will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+           
+            <div class="footer-copyright">
+                <p>&copy; 2024 Quanta Physics Education Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Test state
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let activeQuestions = [];
+        let testStartTime = null;
+        let timerInterval = null;
+        let testTime = 0;
+        
+        // DOM Elements
+        const examSetup = document.getElementById('exam-setup');
+        const examActive = document.getElementById('exam-active');
+        const examResults = document.getElementById('exam-results');
+        const topicSelect = document.getElementById('topic-select');
+        const difficultySlider = document.getElementById('difficulty-slider');
+        const difficultyValue = document.getElementById('difficulty-value');
+        const questionCount = document.getElementById('question-count');
+        const startTestBtn = document.getElementById('start-test-btn');
+        const submitTestBtn = document.getElementById('submit-test-btn');
+        const questionContainer = document.getElementById('question-container');
+        const currentQuestionDisplay = document.getElementById('current-question');
+        const totalQuestionsDisplay = document.getElementById('total-questions');
+        const progressFill = document.getElementById('progress-fill');
+        const timeCounter = document.getElementById('time-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scorePercentage = document.getElementById('score-percentage');
+        const correctCount = document.getElementById('correct-count');
+        const questionTotal = document.getElementById('question-total');
+        const reviewAnswersBtn = document.getElementById('review-answers-btn');
+        const newTestBtn = document.getElementById('new-test-btn');
+        const progressContainer = document.getElementById('progress-container');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize page
+            setupEventListeners();
+            loadUserProgress();
+        });
+        
+        function setupEventListeners() {
+            // Difficulty slider
+            difficultySlider.addEventListener('input', function() {
+                difficultyValue.textContent = this.value;
+            });
+            
+            // Start test button
+            startTestBtn.addEventListener('click', startTest);
+            
+            // Navigation buttons
+            prevBtn.addEventListener('click', showPreviousQuestion);
+            nextBtn.addEventListener('click', showNextQuestion);
+            
+            // Submit test button
+            submitTestBtn.addEventListener('click', submitTest);
+            
+            // Results buttons
+            reviewAnswersBtn.addEventListener('click', function() {
+                // Reset to first question in review mode
+                currentQuestionIndex = 0;
+                showQuestion(currentQuestionIndex, true);
+                
+                // Show exam active screen in review mode
+                examResults.style.display = 'none';
+                examActive.style.display = 'grid';
+                
+                // Hide submit button when reviewing
+                submitTestBtn.style.display = 'none';
+            });
+            
+            newTestBtn.addEventListener('click', function() {
+                // Reset everything and show setup screen
+                resetTest();
+                examResults.style.display = 'none';
+                examSetup.style.display = 'grid';
+            });
+        }
+        
+        function loadUserProgress() {
+            // Check if user is logged in
+            if (currentUser) {
+                // Clear the container
+                progressContainer.innerHTML = '';
+                
+                // Get user progress from data
+                const userProgress = userProgressData.filter(progress => progress.userId === currentUser.id);
+                
+                if (userProgress.length === 0) {
+                    progressContainer.innerHTML = '<p>You haven\'t completed any practice tests yet.</p>';
+                    return;
+                }
+                
+                // Create progress bars for each topic
+                const topicMap = {
+                    mechanics: 'Mechanics',
+                    quantum: 'Quantum Physics',
+                    electromagnetism: 'Electromagnetism',
+                    thermodynamics: 'Thermodynamics',
+                    relativity: 'Relativity'
+                };
+                
+                // Sort by completion rate
+                userProgress.sort((a, b) => b.completion - a.completion);
+                
+                userProgress.forEach(progress => {
+                    const progressElement = document.createElement('div');
+                    progressElement.className = 'topic-progress';
+                    
+                    progressElement.innerHTML = `
+                        <div class="topic-label">${topicMap[progress.topic]}:</div>
+                        <div class="topic-bar">
+                            <div class="topic-fill" style="width: ${progress.completion}%;"></div>
+                        </div>
+                        <div style="width: 50px; text-align: right; margin-left: 8px;">
+                            ${progress.completion}%
+                        </div>
+                    `;
+                    
+                    progressContainer.appendChild(progressElement);
+                });
+            } else {
+                // Show login prompt
+                progressContainer.innerHTML = `
+                    <div class="prompt-container">
+                        <p>Log in to view your topic progress.</p>
+                        <a href="login.html" class="btn btn-primary mt-md">Login</a>
+                    </div>
+                `;
+            }
+        }
+        
+        function startTest() {
+            const topic = topicSelect.value;
+            const difficulty = parseInt(difficultySlider.value);
+            const count = parseInt(questionCount.value);
+            
+            // Filter questions by topic and difficulty
+            let availableQuestions = examQuestionsData.filter(q => 
+                q.topic === topic && 
+                q.difficulty === difficulty
+            );
+            
+            // If not enough questions at exact difficulty, include questions with +/- 1 difficulty
+            if (availableQuestions.length < count) {
+                availableQuestions = examQuestionsData.filter(q => 
+                    q.topic === topic && 
+                    Math.abs(q.difficulty - difficulty) <= 1
+                );
+            }
+            
+            // If still not enough, include all questions for the topic
+            if (availableQuestions.length < count) {
+                availableQuestions = examQuestionsData.filter(q => q.topic === topic);
+            }
+            
+            // Shuffle and select questions
+            activeQuestions = shuffleArray(availableQuestions).slice(0, Math.min(count, availableQuestions.length));
+            
+            // Initialize answers array
+            userAnswers = Array(activeQuestions.length).fill(null);
+            
+            // Update UI
+            document.getElementById('test-topic').textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
+            document.getElementById('test-difficulty').textContent = `${difficulty}/5`;
+            document.getElementById('test-count').textContent = activeQuestions.length;
+            totalQuestionsDisplay.textContent = activeQuestions.length;
+            
+            // Create question navigation
+            createQuestionNavigation();
+            
+            // Start the test
+            currentQuestionIndex = 0;
+            showQuestion(currentQuestionIndex);
+            startTimer();
+            
+            // Show active test screen
+            examSetup.style.display = 'none';
+            examActive.style.display = 'grid';
+            submitTestBtn.style.display = 'block';
+        }
+        
+        function createQuestionNavigation() {
+            const questionNav = document.getElementById('question-nav');
+            questionNav.innerHTML = '';
+            
+            for (let i = 0; i < activeQuestions.length; i++) {
+                const navBtn = document.createElement('button');
+                navBtn.className = 'btn btn-outline';
+                navBtn.textContent = i + 1;
+                navBtn.style.width = '40px';
+                navBtn.style.height = '40px';
+                navBtn.style.padding = '0';
+                navBtn.style.margin = '4px';
+                
+                navBtn.addEventListener('click', function() {
+                    currentQuestionIndex = i;
+                    showQuestion(currentQuestionIndex);
+                });
+                
+                questionNav.appendChild(navBtn);
+            }
+        }
+        
+        function updateQuestionNavigation() {
+            const navButtons = document.getElementById('question-nav').querySelectorAll('button');
+            
+            navButtons.forEach((btn, index) => {
+                // Reset all classes
+                btn.className = 'btn btn-outline';
+                
+                // Mark current question
+                if (index === currentQuestionIndex) {
+                    btn.className = 'btn btn-primary';
+                }
+                
+                // Mark answered questions
+                if (userAnswers[index] !== null) {
+                    if (btn.className.includes('btn-primary')) {
+                        btn.className = 'btn btn-primary';
+                    } else {
+                        btn.className = 'btn btn-outline';
+                        btn.style.backgroundColor = 'var(--primary-light)';
+                    }
+                }
+            });
+        }
+        
+        function startTimer() {
+            testStartTime = new Date();
+            
+            timerInterval = setInterval(function() {
+                const now = new Date();
+                testTime = Math.floor((now - testStartTime) / 1000); // Time in seconds
+                
+                // Format time as MM:SS
+                const minutes = Math.floor(testTime / 60);
+                const seconds = testTime % 60;
+                const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                timeCounter.textContent = formattedTime;
+            }, 1000);
+        }
+        
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+        
+        function showQuestion(index, reviewMode = false) {
+            const question = activeQuestions[index];
+            
+            // Update UI
+            currentQuestionIndex = index;
+            currentQuestionDisplay.textContent = index + 1;
+            progressFill.style.width = `${((index + 1) / activeQuestions.length) * 100}%`;
+            
+            // Update navigation buttons
+            prevBtn.disabled = index === 0;
+            nextBtn.textContent = index === activeQuestions.length - 1 ? 'Finish' : 'Next';
+            
+            // Create question HTML
+            questionContainer.innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-text">${question.question}</div>
+                    <ul class="options-list">
+                        ${question.options.map((option, i) => `
+                            <li class="option-item ${getUserOptionClass(index, i, reviewMode)}" data-index="${i}">
+                                ${option}
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="explanation" ${reviewMode ? 'style="display: block;"' : ''}>
+                        <strong>Explanation:</strong> ${question.explanation}
+                    </div>
+                </div>
+            `;
+            
+            // Add click handlers for options (only if not in review mode)
+            if (!reviewMode) {
+                questionContainer.querySelectorAll('.option-item').forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Store user answer
+                        userAnswers[index] = parseInt(this.dataset.index);
+                        
+                        // Update selected state
+                        questionContainer.querySelectorAll('.option-item').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                        
+                        // Update navigation
+                        updateQuestionNavigation();
+                    });
+                });
+            }
+            
+            // Update navigation
+            updateQuestionNavigation();
+        }
+        
+        function getUserOptionClass(questionIndex, optionIndex, reviewMode) {
+            if (!reviewMode) {
+                // During the test
+                return userAnswers[questionIndex] === optionIndex ? 'selected' : '';
+            } else {
+                // Review mode
+                const correctAnswer = activeQuestions[questionIndex].correctAnswer;
+                
+                if (optionIndex === correctAnswer) {
+                    return 'correct';
+                } else if (userAnswers[questionIndex] === optionIndex) {
+                    return 'incorrect';
+                }
+                
+                return '';
+            }
+        }
+        
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+        
+        function showNextQuestion() {
+            if (currentQuestionIndex < activeQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            } else {
+                // On last question, clicking next should submit the test
+                submitTest();
+            }
+        }
+        
+        function submitTest() {
+            // Confirmation before submitting
+            const unansweredCount = userAnswers.filter(answer => answer === null).length;
+            
+            if (unansweredCount > 0) {
+                const confirmed = confirm(`You have ${unansweredCount} unanswered question(s). Are you sure you want to submit?`);
+                if (!confirmed) return;
+            }
+            
+            // Stop the timer
+            stopTimer();
+            
+            // Calculate score
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === activeQuestions[index].correctAnswer
+            ).length;
+            
+            const percentage = Math.round((correctAnswers / activeQuestions.length) * 100);
+            
+            // Update results UI
+            scorePercentage.textContent = `${percentage}%`;
+            correctCount.textContent = correctAnswers;
+            questionTotal.textContent = activeQuestions.length;
+            
+            document.getElementById('result-topic').textContent = document.getElementById('test-topic').textContent;
+            document.getElementById('result-difficulty').textContent = document.getElementById('test-difficulty').textContent;
+            
+            // Format time
+            const minutes = Math.floor(testTime / 60);
+            const seconds = testTime % 60;
+            document.getElementById('result-time').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Set performance message
+            const performanceMessage = document.getElementById('performance-message');
+            if (percentage >= 90) {
+                performanceMessage.textContent = 'Excellent! You have mastered this topic.';
+            } else if (percentage >= 70) {
+                performanceMessage.textContent = 'Great job! You have a solid understanding of this topic.';
+            } else if (percentage >= 50) {
+                performanceMessage.textContent = 'Good effort! Youre on the right track, but could benefit from more practice.';
+            } else {
+                performanceMessage.textContent = 'Keep practicing! This topic needs more attention.';
+            }
+            
+            // Show recommended resources
+            showRecommendedResources();
+            
+            // Update user progress if logged in
+            if (currentUser) {
+                updateUserProgress(topicSelect.value, percentage);
+            }
+            
+            // Show results screen
+            examActive.style.display = 'none';
+            examResults.style.display = 'grid';
+        }
+        
+        function showRecommendedResources() {
+            const recommendedContainer = document.getElementById('recommended-resources');
+            recommendedContainer.innerHTML = '';
+            
+            // Filter resources by topic
+            const topic = topicSelect.value;
+            const topicResources = resourcesData.filter(r => r.category === topic);
+            
+            // Take top 3 resources by rating
+            const recommended = topicResources
+                .sort((a, b) => b.rating - a.rating)
+                .slice(0, 3);
+            
+            if (recommended.length === 0) {
+                recommendedContainer.innerHTML = '<p>No resources available for this topic.</p>';
+                return;
+            }
+            
+            // Render resources
+            recommended.forEach(resource => {
+                const resourceElement = document.createElement('div');
+                resourceElement.className = 'resource-card';
+                
+                // Map resource type to icon
+                let typeIcon = '📄'; // Default
+                switch (resource.type) {
+                    case 'book': typeIcon = '📚'; break;
+                    case 'video': typeIcon = '🎬'; break;
+                    case 'simulation': typeIcon = '🔬'; break;
+                    case 'article': typeIcon = '📄'; break;
+                    case 'problem-set': typeIcon = '📝'; break;
+                }
+                
+                resourceElement.innerHTML = `
+                    <div class="resource-image">
+                        <span>${typeIcon} ${resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}</span>
+                    </div>
+                    <div class="resource-content">
+                        <span class="resource-category">${resource.category}</span>
+                        <h3 class="resource-title">${resource.title}</h3>
+                        <p>${truncateText(resource.description || 'No description available.', 80)}</p>
+                        <div class="resource-meta">
+                            <span>⭐ ${resource.rating.toFixed(1)}</span>
+                            <span>👁️ ${formatNumber(resource.views)}</span>
+                        </div>
+                    </div>
+                `;
+                
+                recommendedContainer.appendChild(resourceElement);
+            });
+        }
+        
+        function updateUserProgress(topic, score) {
+            // Find existing progress for this topic
+            const existingProgress = userProgressData.find(p => 
+                p.userId === currentUser.id && p.topic === topic
+            );
+            
+            if (existingProgress) {
+                // Update existing progress
+                existingProgress.score = Math.max(existingProgress.score, score);
+                existingProgress.completion = Math.min(100, existingProgress.completion + 10);
+                existingProgress.updatedAt = new Date().toISOString().split('T')[0];
+            } else {
+                // Create new progress
+                const newProgress = {
+                    id: userProgressData.length + 1,
+                    userId: currentUser.id,
+                    topic: topic,
+                    score: score,
+                    completion: Math.min(100, score + 10), // Initial completion
+                    createdAt: new Date().toISOString().split('T')[0],
+                    updatedAt: new Date().toISOString().split('T')[0]
+                };
+                
+                userProgressData.push(newProgress);
+            }
+        }
+        
+        function resetTest() {
+            // Reset test state
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            activeQuestions = [];
+            testStartTime = null;
+            stopTimer();
+            testTime = 0;
+            
+            // Reset UI
+            timeCounter.textContent = '00:00';
+            progressFill.style.width = '0%';
+            
+            // Show submit button
+            submitTestBtn.style.display = 'block';
+        }
+        
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+    </script>
+</body>
+</html>

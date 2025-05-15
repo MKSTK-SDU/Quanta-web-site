@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Library - Quanta Physics Education Platform</title>
+    <meta name="description" content="Explore Quanta's comprehensive library of physics resources, including books, videos, simulations, and articles.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* Library-specific styles */
+        .library-header {
+            background-color: var(--secondary-color);
+            padding: var(--spacing-xl) 0;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .library-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .library-description {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .resource-filters {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .search-bar {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-normal);
+        }
+        
+        .resource-details {
+            background-color: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            margin-top: var(--spacing-xl);
+            display: none;
+        }
+        
+        .resource-details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .resource-details-info {
+            flex: 1;
+        }
+        
+        .resource-details-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+            color: var(--gray-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .resource-details-rating {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-weight: bold;
+        }
+        
+        .resource-details-content {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .resource-details-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .upload-resource-container {
+            background-color: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            margin-top: var(--spacing-xl);
+            display: none;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .pagination-item {
+            margin: 0 var(--spacing-xs);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--gray-300);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .pagination-item:hover {
+            background-color: var(--gray-100);
+        }
+        
+        .pagination-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">Quanta</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="library.html" class="active">Library</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="exam-prep.html">Exams</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <a href="login.html" class="btn btn-primary">Login</a>
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="library.html" class="active">Library</a></li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="exam-prep.html">Exams</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+    
+    <section class="library-header">
+        <div class="container">
+            <h1 class="library-title">Physics Resource Library</h1>
+            <p class="library-description">Explore our comprehensive collection of physics resources, carefully curated for students at all levels. From textbooks and videos to interactive simulations and problem sets.</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <div class="resource-filters">
+            <div class="search-bar">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for resources...">
+            </div>
+            
+            <div class="flex flex-wrap gap-md">
+                <div class="filter-group">
+                    <label for="category-filter" class="filter-label">Category</label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="mechanics">Mechanics</option>
+                        <option value="quantum">Quantum Physics</option>
+                        <option value="electromagnetism">Electromagnetism</option>
+                        <option value="thermodynamics">Thermodynamics</option>
+                        <option value="relativity">Relativity</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="type-filter" class="filter-label">Resource Type</label>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="book">Books</option>
+                        <option value="video">Videos</option>
+                        <option value="simulation">Simulations</option>
+                        <option value="article">Articles</option>
+                        <option value="problem-set">Problem Sets</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="difficulty-filter" class="filter-label">Difficulty</label>
+                    <select id="difficulty-filter" class="filter-select">
+                        <option value="all">All Difficulties</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sort-filter" class="filter-label">Sort By</label>
+                    <select id="sort-filter" class="filter-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="popularity">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-right">
+            <button id="add-resource-btn" class="btn btn-primary">Add Resource</button>
+        </div>
+        
+        <div id="resource-grid" class="resource-grid mt-lg">
+            <!-- Resources will be populated dynamically via JavaScript -->
+        </div>
+        
+        <div class="pagination mt-xl">
+            <div class="pagination-item" data-page="prev">❮</div>
+            <div class="pagination-item active" data-page="1">1</div>
+            <div class="pagination-item" data-page="2">2</div>
+            <div class="pagination-item" data-page="3">3</div>
+            <div class="pagination-item" data-page="next">❯</div>
+        </div>
+        
+        <div id="resource-details" class="resource-details">
+            <button id="close-details-btn" class="btn btn-outline" style="position: absolute; right: 20px; top: 20px;">Close</button>
+            <div class="resource-details-header">
+                <div class="resource-details-info">
+                    <span class="resource-category">Category</span>
+                    <h2 id="detail-title" class="mb-sm">Resource Title</h2>
+                    <p id="detail-author" class="mb-sm">By Author Name</p>
+                    <div class="resource-details-meta">
+                        <span id="detail-type">Type</span>
+                        <span id="detail-difficulty">Difficulty</span>
+                        <span id="detail-views">Views</span>
+                        <span id="detail-date">Date</span>
+                    </div>
+                </div>
+                <div class="resource-details-rating" id="detail-rating">4.9 ★</div>
+            </div>
+            
+            <div class="resource-details-content">
+                <h3>Description</h3>
+                <p id="detail-description">Resource description goes here.</p>
+            </div>
+            
+            <div class="resource-details-actions">
+                <button class="btn btn-primary">Access Resource</button>
+                <button class="btn btn-outline">Save for Later</button>
+                <button class="btn btn-outline">Share</button>
+            </div>
+        </div>
+        
+        <div id="upload-resource-container" class="upload-resource-container">
+            <h2 class="mb-lg">Add a New Resource</h2>
+            <form id="upload-resource-form">
+                <div class="form-group">
+                    <label for="upload-title" class="form-label">Title</label>
+                    <input type="text" id="upload-title" name="title" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-author" class="form-label">Author</label>
+                    <input type="text" id="upload-author" name="author" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-category" class="form-label">Category</label>
+                    <select id="upload-category" name="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="mechanics">Mechanics</option>
+                        <option value="quantum">Quantum Physics</option>
+                        <option value="electromagnetism">Electromagnetism</option>
+                        <option value="thermodynamics">Thermodynamics</option>
+                        <option value="relativity">Relativity</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-type" class="form-label">Resource Type</label>
+                    <select id="upload-type" name="type" class="form-control" required>
+                        <option value="">Select Type</option>
+                        <option value="book">Book</option>
+                        <option value="video">Video</option>
+                        <option value="simulation">Simulation</option>
+                        <option value="article">Article</option>
+                        <option value="problem-set">Problem Set</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-difficulty" class="form-label">Difficulty</label>
+                    <select id="upload-difficulty" name="difficulty" class="form-control" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-description" class="form-label">Description</label>
+                    <textarea id="upload-description" name="description" class="form-control" rows="5" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-file" class="form-label">Resource File or URL</label>
+                    <input type="text" id="upload-file" name="file" class="form-control" placeholder="Enter URL or upload file" required>
+                </div>
+                
+                <div class="flex justify-between mt-lg">
+                    <button type="button" id="cancel-upload-btn" class="btn btn-outline">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Resource</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-copyright">
+                <p>&copy; 2024 Quanta Physics Education Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Page state
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let filteredResources = [...resourcesData];
+        let selectedResourceId = null;
+        
+        // DOM Elements
+        const resourceGrid = document.getElementById('resource-grid');
+        const resourceDetails = document.getElementById('resource-details');
+        const closeDetailsBtn = document.getElementById('close-details-btn');
+        const uploadContainer = document.getElementById('upload-resource-container');
+        const addResourceBtn = document.getElementById('add-resource-btn');
+        const cancelUploadBtn = document.getElementById('cancel-upload-btn');
+        const uploadForm = document.getElementById('upload-resource-form');
+        
+        // Search and filter elements
+        const searchInput = document.getElementById('search-input');
+        const categoryFilter = document.getElementById('category-filter');
+        const typeFilter = document.getElementById('type-filter');
+        const difficultyFilter = document.getElementById('difficulty-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize page
+            applyFiltersAndRender();
+            setupEventListeners();
+        });
+        
+        function setupEventListeners() {
+            // Search input
+            searchInput.addEventListener('input', debounce(function() {
+                currentPage = 1;
+                applyFiltersAndRender();
+            }, 300));
+            
+            // Filter selects
+            categoryFilter.addEventListener('change', function() {
+                currentPage = 1;
+                applyFiltersAndRender();
+            });
+            
+            typeFilter.addEventListener('change', function() {
+                currentPage = 1;
+                applyFiltersAndRender();
+            });
+            
+            difficultyFilter.addEventListener('change', function() {
+                currentPage = 1;
+                applyFiltersAndRender();
+            });
+            
+            sortFilter.addEventListener('change', function() {
+                applyFiltersAndRender();
+            });
+            
+            // Pagination
+            document.querySelectorAll('.pagination-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.dataset.page;
+                    
+                    if (page === 'prev') {
+                        if (currentPage > 1) currentPage--;
+                    } else if (page === 'next') {
+                        const totalPages = Math.ceil(filteredResources.length / itemsPerPage);
+                        if (currentPage < totalPages) currentPage++;
+                    } else {
+                        currentPage = parseInt(page);
+                    }
+                    
+                    updatePagination();
+                    renderResources();
+                });
+            });
+            
+            // Resource details
+            closeDetailsBtn.addEventListener('click', function() {
+                resourceDetails.style.display = 'none';
+            });
+            
+            // Add resource
+            addResourceBtn.addEventListener('click', function() {
+                if (!currentUser) {
+                    alert('Please log in to add resources.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                uploadContainer.style.display = 'block';
+                resourceDetails.style.display = 'none';
+                window.scrollTo({ top: uploadContainer.offsetTop - 100, behavior: 'smooth' });
+            });
+            
+            cancelUploadBtn.addEventListener('click', function() {
+                uploadContainer.style.display = 'none';
+                uploadForm.reset();
+            });
+            
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const title = document.getElementById('upload-title').value;
+                const author = document.getElementById('upload-author').value;
+                const category = document.getElementById('upload-category').value;
+                const type = document.getElementById('upload-type').value;
+                const difficulty = document.getElementById('upload-difficulty').value;
+                const description = document.getElementById('upload-description').value;
+                
+                // Create new resource
+                const newResource = {
+                    id: resourcesData.length + 1,
+                    title,
+                    author,
+                    category,
+                    type,
+                    difficulty,
+                    description,
+                    rating: 0,
+                    views: 0,
+                    createdAt: new Date().toISOString().split('T')[0],
+                    updatedAt: new Date().toISOString().split('T')[0]
+                };
+                
+                // Add to resources array
+                resourcesData.unshift(newResource);
+                
+                // Reset form and hide container
+                uploadForm.reset();
+                uploadContainer.style.display = 'none';
+                
+                // Rerender resources
+                applyFiltersAndRender();
+                
+                // Show success message
+                alert('Resource submitted successfully!');
+            });
+        }
+        
+        function applyFiltersAndRender() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categoryFilter.value;
+            const type = typeFilter.value;
+            const difficulty = difficultyFilter.value;
+            const sortBy = sortFilter.value;
+            
+            // Filter resources
+            filteredResources = resourcesData.filter(resource => {
+                // Search term filter
+                const matchesSearch = 
+                    !searchTerm || 
+                    resource.title.toLowerCase().includes(searchTerm) ||
+                    resource.author.toLowerCase().includes(searchTerm) ||
+                    (resource.description && resource.description.toLowerCase().includes(searchTerm));
+                
+                // Category filter
+                const matchesCategory = category === 'all' || resource.category === category;
+                
+                // Type filter
+                const matchesType = type === 'all' || resource.type === type;
+                
+                // Difficulty filter
+                const matchesDifficulty = difficulty === 'all' || resource.difficulty === difficulty;
+                
+                return matchesSearch && matchesCategory && matchesType && matchesDifficulty;
+            });
+            
+            // Sort resources
+            filteredResources.sort((a, b) => {
+                switch (sortBy) {
+                    case 'newest':
+                        return new Date(b.updatedAt) - new Date(a.updatedAt);
+                    case 'oldest':
+                        return new Date(a.updatedAt) - new Date(b.updatedAt);
+                    case 'rating':
+                        return b.rating - a.rating;
+                    case 'popularity':
+                        return b.views - a.views;
+                    default:
+                        return 0;
+                }
+            });
+            
+            updatePagination();
+            renderResources();
+        }
+        
+        function renderResources() {
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedResources = filteredResources.slice(startIndex, endIndex);
+            
+            resourceGrid.innerHTML = '';
+            
+            if (filteredResources.length === 0) {
+                resourceGrid.innerHTML = '<div class="no-results">No resources found matching your criteria.</div>';
+                return;
+            }
+            
+            paginatedResources.forEach(resource => {
+                const resourceElement = document.createElement('div');
+                resourceElement.className = 'resource-card';
+                resourceElement.setAttribute('data-id', resource.id);
+                
+                // Map resource type to icon
+                let typeIcon = '📄'; // Default
+                switch (resource.type) {
+                    case 'book': typeIcon = '📚'; break;
+                    case 'video': typeIcon = '🎬'; break;
+                    case 'simulation': typeIcon = '🔬'; break;
+                    case 'article': typeIcon = '📄'; break;
+                    case 'problem-set': typeIcon = '📝'; break;
+                }
+                
+                resourceElement.innerHTML = `
+                    <div class="resource-image">
+                        <span>${typeIcon} ${resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}</span>
+                    </div>
+                    <div class="resource-content">
+                        <span class="resource-category">${resource.category}</span>
+                        <h3 class="resource-title">${resource.title}</h3>
+                        <p>${resource.description ? truncateText(resource.description, 80) : 'No description available.'}</p>
+                        <div class="resource-meta">
+                            <span>⭐ ${resource.rating.toFixed(1)}</span>
+                            <span>👁️ ${formatNumber(resource.views)}</span>
+                            <span>Updated ${formatDate(resource.updatedAt)}</span>
+                        </div>
+                    </div>
+                `;
+                
+                resourceElement.addEventListener('click', function() {
+                    const resourceId = parseInt(this.getAttribute('data-id'));
+                    showResourceDetails(resourceId);
+                });
+                
+                resourceGrid.appendChild(resourceElement);
+            });
+        }
+        
+        function showResourceDetails(resourceId) {
+            const resource = resourcesData.find(r => r.id === resourceId);
+            if (!resource) return;
+            
+            selectedResourceId = resourceId;
+            
+            // Update details
+            document.querySelector('.resource-category').textContent = resource.category;
+            document.getElementById('detail-title').textContent = resource.title;
+            document.getElementById('detail-author').textContent = `By ${resource.author}`;
+            document.getElementById('detail-type').textContent = resource.type.charAt(0).toUpperCase() + resource.type.slice(1);
+            document.getElementById('detail-difficulty').textContent = resource.difficulty.charAt(0).toUpperCase() + resource.difficulty.slice(1);
+            document.getElementById('detail-views').textContent = `${formatNumber(resource.views)} views`;
+            document.getElementById('detail-date').textContent = `Updated ${formatDate(resource.updatedAt)}`;
+            document.getElementById('detail-rating').textContent = `${resource.rating.toFixed(1)} ★`;
+            document.getElementById('detail-description').textContent = resource.description || 'No description available.';
+            
+            // Show details
+            resourceDetails.style.display = 'block';
+            uploadContainer.style.display = 'none';
+            
+            // Scroll to details
+            window.scrollTo({ top: resourceDetails.offsetTop - 100, behavior: 'smooth' });
+            
+            // Increment views
+            resource.views += 1;
+        }
+        
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredResources.length / itemsPerPage);
+            
+            // Update pagination numbers
+            const paginationItems = document.querySelectorAll('.pagination-item');
+            
+            // Show/hide pagination based on results
+            const pagination = document.querySelector('.pagination');
+            pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
+            
+            if (totalPages <= 3) {
+                // If 3 pages or less, show exact pages
+                for (let i = 0; i < 3; i++) {
+                    const pageItem = paginationItems[i + 1]; // Skip prev button
+                    if (i < totalPages) {
+                        pageItem.textContent = i + 1;
+                        pageItem.style.display = 'flex';
+                    } else {
+                        pageItem.style.display = 'none';
+                    }
+                }
+            } else {
+                // If more than 3 pages, show adaptive pagination
+                if (currentPage === 1) {
+                    paginationItems[1].textContent = '1';
+                    paginationItems[2].textContent = '2';
+                    paginationItems[3].textContent = '3';
+                } else if (currentPage === totalPages) {
+                    paginationItems[1].textContent = totalPages - 2;
+                    paginationItems[2].textContent = totalPages - 1;
+                    paginationItems[3].textContent = totalPages;
+                } else {
+                    paginationItems[1].textContent = currentPage - 1;
+                    paginationItems[2].textContent = currentPage;
+                    paginationItems[3].textContent = currentPage + 1;
+                }
+            }
+            
+            // Update active state
+            paginationItems.forEach(item => {
+                if (item.dataset.page !== 'prev' && item.dataset.page !== 'next') {
+                    item.classList.toggle('active', parseInt(item.textContent) === currentPage);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

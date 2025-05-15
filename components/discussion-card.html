@@ -1,0 +1,100 @@
+<!-- Discussion Card Component -->
+<div class="discussion-item" data-id="${discussion.id}">
+    <div class="discussion-header">
+        <div class="discussion-info">
+            <h3 class="discussion-title">${discussion.title}</h3>
+            <div class="discussion-meta">
+                <span>By ${discussion.authorName}</span>
+                <span>Posted ${formatDate(discussion.createdAt)}</span>
+                <span>${discussion.commentCount} replies</span>
+            </div>
+            <div class="discussion-tags">
+                ${discussion.tags.map(tag => `<span class="discussion-tag">${tag}</span>`).join('')}
+            </div>
+        </div>
+        <div class="discussion-votes">
+            <button class="vote-btn upvote" data-id="${discussion.id}">▲</button>
+            <span class="vote-count">${discussion.votes}</span>
+            <button class="vote-btn downvote" data-id="${discussion.id}">▼</button>
+        </div>
+    </div>
+    <div class="discussion-preview">
+        ${truncateText(discussion.content, 200)}
+    </div>
+    <div class="discussion-actions">
+        <a href="#" class="discussion-action-link view-discussion" data-id="${discussion.id}">
+            Read More
+        </a>
+        <div>
+            ${discussion.solved ? '<span class="discussion-tag">✓ Solved</span>' : ''}
+        </div>
+    </div>
+</div>
+
+<!-- Discussion Card Usage Example -->
+<!--
+<script>
+// Function to create a discussion card
+function createDiscussionCard(discussion) {
+    // Create tags HTML
+    const tagsHtml = discussion.tags.map(tag => `<span class="discussion-tag">${tag}</span>`).join('');
+    
+    // Create card element from template
+    const template = document.createElement('template');
+    template.innerHTML = `
+        <div class="discussion-item" data-id="${discussion.id}">
+            <div class="discussion-header">
+                <div class="discussion-info">
+                    <h3 class="discussion-title">${discussion.title}</h3>
+                    <div class="discussion-meta">
+                        <span>By ${discussion.authorName}</span>
+                        <span>Posted ${formatDate(discussion.createdAt)}</span>
+                        <span>${discussion.commentCount} replies</span>
+                    </div>
+                    <div class="discussion-tags">
+                        ${tagsHtml}
+                    </div>
+                </div>
+                <div class="discussion-votes">
+                    <button class="vote-btn upvote" data-id="${discussion.id}">▲</button>
+                    <span class="vote-count">${discussion.votes}</span>
+                    <button class="vote-btn downvote" data-id="${discussion.id}">▼</button>
+                </div>
+            </div>
+            <div class="discussion-preview">
+                ${truncateText(discussion.content, 200)}
+            </div>
+            <div class="discussion-actions">
+                <a href="#" class="discussion-action-link view-discussion" data-id="${discussion.id}">
+                    Read More
+                </a>
+                <div>
+                    ${discussion.solved ? '<span class="discussion-tag">✓ Solved</span>' : ''}
+                </div>
+            </div>
+        </div>
+    `.trim();
+    
+    const card = template.content.firstChild;
+    
+    // Add click events for voting
+    card.querySelector('.upvote').addEventListener('click', (e) => {
+        e.stopPropagation();
+        voteOnDiscussion(discussion.id, 'up');
+    });
+    
+    card.querySelector('.downvote').addEventListener('click', (e) => {
+        e.stopPropagation();
+        voteOnDiscussion(discussion.id, 'down');
+    });
+    
+    // Add click event to view discussion
+    card.querySelector('.view-discussion').addEventListener('click', (e) => {
+        e.preventDefault();
+        showDiscussionDetails(discussion.id);
+    });
+    
+    return card;
+}
+</script>
+-->

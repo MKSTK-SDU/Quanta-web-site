@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Quanta Physics Education Platform</title>
+    <meta name="description" content="View and manage your profile, track your learning progress, and access your saved resources and discussions.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* Profile-specific styles */
+        .profile-header {
+            background-color: var(--secondary-color);
+            padding: var(--spacing-xl) 0;
+            color: var(--white);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+        
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .user-details h1 {
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .user-status {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            font-size: var(--font-size-small);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--gray-300);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all var(--transition-fast);
+        }
+        
+        .tab:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .profile-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .progress-card {
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            background-color: var(--white);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .progress-title {
+            font-size: var(--font-size-medium);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .progress-item {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-xl);
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--gray-600);
+        }
+        
+        .activity-item {
+            display: flex;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-md);
+            flex-shrink: 0;
+        }
+        
+        .activity-details {
+            flex: 1;
+        }
+        
+        .activity-details h4 {
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .activity-details p {
+            color: var(--gray-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .activity-date {
+            color: var(--gray-600);
+            font-size: var(--font-size-small);
+            text-align: right;
+            white-space: nowrap;
+            margin-left: var(--spacing-md);
+        }
+        
+        .edit-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">Quanta</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="library.html">Library</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="exam-prep.html">Exams</a></li>
+                    <li><a href="profile.html" class="active">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="library.html">Library</a></li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="exam-prep.html">Exams</a></li>
+            <li><a href="profile.html" class="active">Profile</a></li>
+            <li><a href="#" id="mobile-logout">Logout</a></li>
+        </ul>
+    </div>
+    
+    <div id="login-required" style="display: none;">
+        <section class="container text-center" style="padding: 80px 0;">
+            <h2>Please Log In</h2>
+            <p class="mb-lg">You need to be logged in to view your profile.</p>
+            <a href="login.html" class="btn btn-primary">Login</a>
+            <p class="mt-md">Don't have an account? <a href="signup.html">Sign up</a></p>
+        </section>
+    </div>
+    
+    <div id="profile-content" style="display: none;">
+        <section class="profile-header">
+            <div class="container">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">PF</div>
+                    <div class="user-details">
+                        <h1 id="username">PhysicsFan</h1>
+                        <p id="user-email">physics@example.com</p>
+                        <div id="user-status" class="user-status">Member since <span id="join-date">May 2023</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <main class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="dashboard">Dashboard</div>
+                <div class="tab" data-tab="progress">Learning Progress</div>
+                <div class="tab" data-tab="activity">Recent Activity</div>
+                <div class="tab" data-tab="settings">Account Settings</div>
+            </div>
+            
+            <div id="dashboard" class="tab-content active">
+                <div class="stats-grid mb-xl">
+                    <div class="stat-card">
+                        <div class="stat-value" id="discussions-count">12</div>
+                        <div class="stat-label">Discussions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="resources-count">5</div>
+                        <div class="stat-label">Shared Resources</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="exams-count">23</div>
+                        <div class="stat-label">Practice Tests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avg-score">78%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-2">
+                    <div class="profile-card">
+                        <h3 class="mb-md">Learning Progress</h3>
+                        <div id="progress-summary">
+                            <!-- Progress will be populated dynamically -->
+                        </div>
+                        <div class="text-right mt-md">
+                            <button class="btn btn-outline tab-link" data-tab="progress">View All</button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h3 class="mb-md">Recent Activity</h3>
+                        <div id="activity-summary">
+                            <!-- Activity will be populated dynamically -->
+                        </div>
+                        <div class="text-right mt-md">
+                            <button class="btn btn-outline tab-link" data-tab="activity">View All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="progress" class="tab-content">
+                <h2 class="mb-lg">Your Learning Progress</h2>
+                <div id="progress-container">
+                    <!-- Progress cards will be populated dynamically -->
+                </div>
+                
+                <div class="progress-card">
+                    <h3 class="progress-title">Recommended Next Steps</h3>
+                    <p>Based on your progress, we recommend focusing on the following topics:</p>
+                    <ul class="mt-md">
+                        <li><a href="#">Thermodynamics: Heat Engines and Entropy</a></li>
+                        <li><a href="#">Quantum Physics: Wave Functions and Probability</a></li>
+                        <li><a href="#">Mechanics: Angular Momentum in 3D Systems</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="activity" class="tab-content">
+                <h2 class="mb-lg">Your Recent Activity</h2>
+                <div class="profile-card">
+                    <div id="activity-list">
+                        <!-- Activity items will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="settings" class="tab-content">
+                <h2 class="mb-lg">Account Settings</h2>
+                <div class="profile-card">
+                    <div class="flex justify-between items-center mb-md">
+                        <h3>Profile Information</h3>
+                        <button id="edit-profile-btn" class="btn btn-outline">Edit</button>
+                    </div>
+                    
+                    <div id="profile-info">
+                        <div class="grid grid-2 gap-md">
+                            <div>
+                                <p><strong>Username:</strong> <span id="display-username">PhysicsFan</span></p>
+                                <p><strong>Email:</strong> <span id="display-email">physics@example.com</span></p>
+                            </div>
+                            <div>
+                                <p><strong>Member Since:</strong> <span id="display-join-date">May 2023</span></p>
+                                <p><strong>Account Type:</strong> <span id="display-account-type">Standard Member</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="edit-profile-form" class="edit-form">
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label for="edit-username" class="form-label">Username</label>
+                                <input type="text" id="edit-username" name="username" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-email" class="form-label">Email</label>
+                                <input type="email" id="edit-email" name="email" class="form-control">
+                            </div>
+                            
+                            <div class="flex justify-between">
+                                <button type="button" id="cancel-edit-btn" class="btn btn-outline">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <h3 class="mb-md">Notification Settings</h3>
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="email-discussions" checked>
+                            <span class="checkbox-text">Email me when someone replies to my discussions</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="email-resources" checked>
+                            <span class="checkbox-text">Email me about new resources in my areas of interest</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="email-newsletter" checked>
+                            <span class="checkbox-text">Receive our monthly physics newsletter</span>
+                        </label>
+                    </div>
+                    <button id="save-notifications-btn" class="btn btn-primary">Save Preferences</button>
+                </div>
+                
+                <div class="profile-card">
+                    <h3 class="mb-md">Account Security</h3>
+                    <button id="change-password-btn" class="btn btn-outline mb-md">Change Password</button>
+                    
+                    <div id="change-password-form" class="edit-form">
+                        <form id="password-form">
+                            <div class="form-group">
+                                <label for="current-password" class="form-label">Current Password</label>
+                                <input type="password" id="current-password" name="currentPassword" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="new-password" class="form-label">New Password</label>
+                                <input type="password" id="new-password" name="newPassword" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirm-password" class="form-label">Confirm New Password</label>
+                                <input type="password" id="confirm-password" name="confirmPassword" class="form-control">
+                            </div>
+                            
+                            <div class="flex justify-between">
+                                <button type="button" id="cancel-password-btn" class="btn btn-outline">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <h3 class="mb-md">Delete Account</h3>
+                    <p class="mb-md">Permanently delete your account and all your data. This action cannot be undone.</p>
+                    <button id="delete-account-btn" class="btn btn-outline" style="color: var(--danger-color); border-color: var(--danger-color);">Delete Account</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-copyright">
+                <p>&copy; 2024 Quanta Physics Education Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // DOM Elements
+        const loginRequired = document.getElementById('login-required');
+        const profileContent = document.getElementById('profile-content');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const tabLinks = document.querySelectorAll('.tab-link');
+        const logoutBtn = document.getElementById('mobile-logout');
+        
+        // Settings Elements
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const profileInfo = document.getElementById('profile-info');
+        const editProfileForm = document.getElementById('edit-profile-form');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const profileForm = document.getElementById('profile-form');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const changePasswordForm = document.getElementById('change-password-form');
+        const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+        const passwordForm = document.getElementById('password-form');
+        const saveNotificationsBtn = document.getElementById('save-notifications-btn');
+        const deleteAccountBtn = document.getElementById('delete-account-btn');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (currentUser) {
+                // User is logged in, show profile content
+                profileContent.style.display = 'block';
+                loginRequired.style.display = 'none';
+                
+                // Load user data
+                loadUserData();
+                loadUserProgress();
+                loadUserActivity();
+            } else {
+                // User is not logged in, show login required message
+                profileContent.style.display = 'none';
+                loginRequired.style.display = 'block';
+            }
+            
+            // Set up tab navigation
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Set up tab links
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // Simulate click on the corresponding tab
+                    document.querySelector(`.tab[data-tab="${tabId}"]`).click();
+                });
+            });
+            
+            // Set up logout button
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Clear user data
+                    localStorage.removeItem('user');
+                    
+                    // Redirect to home page
+                    window.location.href = '../index.html';
+                });
+            }
+            
+            // Set up profile editing
+            if (editProfileBtn) {
+                editProfileBtn.addEventListener('click', function() {
+                    profileInfo.style.display = 'none';
+                    editProfileForm.style.display = 'block';
+                    
+                    // Populate form with current values
+                    document.getElementById('edit-username').value = currentUser.username || '';
+                    document.getElementById('edit-email').value = currentUser.email || '';
+                });
+            }
+            
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', function() {
+                    profileInfo.style.display = 'block';
+                    editProfileForm.style.display = 'none';
+                });
+            }
+            
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const username = document.getElementById('edit-username').value;
+                    const email = document.getElementById('edit-email').value;
+                    
+                    // Update user data
+                    currentUser.username = username;
+                    currentUser.email = email;
+                    
+                    // Save to localStorage
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    
+                    // Update display
+                    loadUserData();
+                    
+                    // Hide form
+                    profileInfo.style.display = 'block';
+                    editProfileForm.style.display = 'none';
+                    
+                    // Show success message
+                    alert('Profile updated successfully!');
+                });
+            }
+            
+            // Set up password change
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', function() {
+                    changePasswordForm.style.display = 'block';
+                    this.style.display = 'none';
+                });
+            }
+            
+            if (cancelPasswordBtn) {
+                cancelPasswordBtn.addEventListener('click', function() {
+                    changePasswordForm.style.display = 'none';
+                    changePasswordBtn.style.display = 'block';
+                    passwordForm.reset();
+                });
+            }
+            
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const currentPassword = document.getElementById('current-password').value;
+                    const newPassword = document.getElementById('new-password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+                    
+                    // Basic validation
+                    if (currentPassword !== 'password') { // Demo password
+                        alert('Current password is incorrect.');
+                        return;
+                    }
+                    
+                    if (newPassword.length < 6) {
+                        alert('New password must be at least 6 characters long.');
+                        return;
+                    }
+                    
+                    if (newPassword !== confirmPassword) {
+                        alert('New passwords do not match.');
+                        return;
+                    }
+                    
+                    // In a real app, this would send the password change to the server
+                    
+                    // Reset form and hide
+                    passwordForm.reset();
+                    changePasswordForm.style.display = 'none';
+                    changePasswordBtn.style.display = 'block';
+                    
+                    // Show success message
+                    alert('Password updated successfully!');
+                });
+            }
+            
+            // Set up notification preferences
+            if (saveNotificationsBtn) {
+                saveNotificationsBtn.addEventListener('click', function() {
+                    // In a real app, this would save the notification preferences to the server
+                    alert('Notification preferences saved!');
+                });
+            }
+            
+            // Set up account deletion
+            if (deleteAccountBtn) {
+                deleteAccountBtn.addEventListener('click', function() {
+                    const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+                    
+                    if (confirmed) {
+                        // In a real app, this would send the account deletion request to the server
+                        
+                        // Clear user data
+                        localStorage.removeItem('user');
+                        
+                        // Redirect to home page
+                        window.location.href = '../index.html';
+                    }
+                });
+            }
+        });
+        
+        function loadUserData() {
+            if (!currentUser) return;
+            
+            // Update profile header
+            document.getElementById('username').textContent = currentUser.username;
+            document.getElementById('user-email').textContent = currentUser.email;
+            document.getElementById('user-avatar').textContent = getInitials(currentUser.username);
+            
+            // Format join date
+            const joinDate = new Date(currentUser.createdAt);
+            const formattedDate = joinDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            document.getElementById('join-date').textContent = formattedDate;
+            
+            // Update settings section
+            document.getElementById('display-username').textContent = currentUser.username;
+            document.getElementById('display-email').textContent = currentUser.email;
+            document.getElementById('display-join-date').textContent = formattedDate;
+            document.getElementById('display-account-type').textContent = currentUser.isExpert ? 'Expert' : 'Standard Member';
+            
+            // Update stats (in a real app, these would be fetched from the server)
+            document.getElementById('discussions-count').textContent = Math.floor(Math.random() * 20);
+            document.getElementById('resources-count').textContent = Math.floor(Math.random() * 10);
+            document.getElementById('exams-count').textContent = Math.floor(Math.random() * 30);
+            document.getElementById('avg-score').textContent = `${Math.floor(Math.random() * 30) + 70}%`;
+        }
+        
+        function loadUserProgress() {
+            const progressSummary = document.getElementById('progress-summary');
+            const progressContainer = document.getElementById('progress-container');
+            
+            if (!progressSummary || !progressContainer) return;
+            
+            // Clear existing content
+            progressSummary.innerHTML = '';
+            progressContainer.innerHTML = '';
+            
+            // Get user progress
+            const userProgress = userProgressData.filter(progress => progress.userId === currentUser?.id);
+            
+            if (userProgress.length === 0) {
+                progressSummary.innerHTML = '<p>No learning progress recorded yet.</p>';
+                progressContainer.innerHTML = '<p>No learning progress recorded yet. Start practicing to track your progress!</p>';
+                return;
+            }
+            
+            // Sort by completion rate
+            userProgress.sort((a, b) => b.completion - a.completion);
+            
+            // Create progress items for summary (top 3)
+            const summaryProgress = userProgress.slice(0, 3);
+            
+            // Map of topic IDs to display names
+            const topicMap = {
+                mechanics: 'Mechanics',
+                quantum: 'Quantum Physics',
+                electromagnetism: 'Electromagnetism',
+                thermodynamics: 'Thermodynamics',
+                relativity: 'Relativity'
+            };
+            
+            summaryProgress.forEach(progress => {
+                const progressItem = document.createElement('div');
+                progressItem.className = 'progress-item';
+                
+                progressItem.innerHTML = `
+                    <div class="progress-label">
+                        <span>${topicMap[progress.topic] || progress.topic}</span>
+                        <span>${progress.completion}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress.completion}%"></div>
+                    </div>
+                `;
+                
+                progressSummary.appendChild(progressItem);
+            });
+            
+            // Create progress cards for full view
+            userProgress.forEach(progress => {
+                const progressCard = document.createElement('div');
+                progressCard.className = 'progress-card';
+                
+                const recommendations = [
+                    'Practice more advanced problems',
+                    'Review basic concepts',
+                    'Try interactive simulations',
+                    'Join a discussion on this topic',
+                    'Watch video tutorials'
+                ];
+                
+                const randomRecommendation = recommendations[Math.floor(Math.random() * recommendations.length)];
+                
+                progressCard.innerHTML = `
+                    <h3 class="progress-title">${topicMap[progress.topic] || progress.topic}</h3>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Completion</span>
+                            <span>${progress.completion}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progress.completion}%"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-md">
+                        <div>
+                            <p><strong>Best Score:</strong> ${progress.score}%</p>
+                            <p><strong>Last Activity:</strong> ${formatDate(progress.updatedAt)}</p>
+                        </div>
+                        <div>
+                            <p><strong>Recommendation:</strong> ${randomRecommendation}</p>
+                            <p class="mt-sm"><a href="exam-prep.html" class="btn btn-outline btn-sm">Continue Learning</a></p>
+                        </div>
+                    </div>
+                `;
+                
+                progressContainer.appendChild(progressCard);
+            });
+        }
+        
+        function loadUserActivity() {
+            const activitySummary = document.getElementById('activity-summary');
+            const activityList = document.getElementById('activity-list');
+            
+            if (!activitySummary || !activityList) return;
+            
+            // Clear existing content
+            activitySummary.innerHTML = '';
+            activityList.innerHTML = '';
+            
+            // Generate some mock activity (in a real app, this would come from the server)
+            const activities = [
+                {
+                    type: 'exam',
+                    title: 'Completed Quantum Physics test',
+                    details: 'Scored 85% on 10 questions',
+                    date: '2024-05-10',
+                    icon: '📝'
+                },
+                {
+                    type: 'discussion',
+                    title: 'Posted a new discussion',
+                    details: 'Understanding wave-particle duality',
+                    date: '2024-05-08',
+                    icon: '💬'
+                },
+                {
+                    type: 'resource',
+                    title: 'Added a new resource',
+                    details: 'Quantum Mechanics video tutorial',
+                    date: '2024-05-05',
+                    icon: '📚'
+                },
+                {
+                    type: 'comment',
+                    title: 'Commented on a discussion',
+                    details: 'Explaining the twin paradox in relativity',
+                    date: '2024-05-02',
+                    icon: '✏️'
+                },
+                {
+                    type: 'exam',
+                    title: 'Completed Mechanics test',
+                    details: 'Scored 92% on 15 questions',
+                    date: '2024-04-28',
+                    icon: '📝'
+                },
+                {
+                    type: 'resource',
+                    title: 'Saved a resource for later',
+                    details: 'Electromagnetic Fields Simulation',
+                    date: '2024-04-25',
+                    icon: '🔖'
+                }
+            ];
+            
+            // Add recent activities to summary (top 3)
+            const summaryActivities = activities.slice(0, 3);
+            
+            summaryActivities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                
+                activityItem.innerHTML = `
+                    <div class="activity-icon">${activity.icon}</div>
+                    <div class="activity-details">
+                        <h4>${activity.title}</h4>
+                        <p>${activity.details}</p>
+                    </div>
+                    <div class="activity-date">${formatDate(activity.date)}</div>
+                `;
+                
+                activitySummary.appendChild(activityItem);
+            });
+            
+            // Add all activities to full list
+            activities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                
+                activityItem.innerHTML = `
+                    <div class="activity-icon">${activity.icon}</div>
+                    <div class="activity-details">
+                        <h4>${activity.title}</h4>
+                        <p>${activity.details}</p>
+                    </div>
+                    <div class="activity-date">${formatDate(activity.date)}</div>
+                `;
+                
+                activityList.appendChild(activityItem);
+            });
+        }
+    </script>
+</body>
+</html>

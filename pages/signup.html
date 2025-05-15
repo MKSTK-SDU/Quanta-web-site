@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Quanta Physics Education Platform</title>
+    <meta name="description" content="Create an account to access Quanta's physics education resources, discussions, and exam preparation tools.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">Quanta</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="library.html">Library</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="exam-prep.html">Exams</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="library.html">Library</a></li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="exam-prep.html">Exams</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+    
+    <main class="auth-container">
+        <div class="auth-form">
+            <h1>Create an Account</h1>
+            
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <small class="form-text">Password must be at least 6 characters long.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="checkbox-text">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Sign Up</button>
+                </div>
+            </form>
+            
+            <div class="auth-links">
+                <p>Already have an account? <a href="login.html">Log in</a></p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Quanta</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="library.html">Library</a></li>
+                        <li><a href="forum.html">Forum</a></li>
+                        <li><a href="exam-prep.html">Exam Preparation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                        <li><a href="#">Report an Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 Quanta Physics Education Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.getElementById('signup-form');
+            
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const termsChecked = document.getElementById('terms').checked;
+                
+                // Basic validation
+                if (username.length < 3) {
+                    alert('Username must be at least 3 characters long');
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (!termsChecked) {
+                    alert('You must agree to the Terms of Service and Privacy Policy');
+                    return;
+                }
+                
+                // In a real app, this would send a request to the server
+                // For this demo, we'll create a new user locally
+                
+                // Check if email is already in use
+                const existingUser = usersData.find(user => user.email === email);
+                if (existingUser) {
+                    alert('This email is already registered. Please log in.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Create new user
+                const newUser = {
+                    id: usersData.length + 1,
+                    username: username,
+                    email: email,
+                    profileImage: null,
+                    isExpert: false,
+                    createdAt: new Date().toISOString().split('T')[0]
+                };
+                
+                // Add to users array (in a real app, this would be server-side)
+                usersData.push(newUser);
+                
+                // Store user in localStorage
+                localStorage.setItem('user', JSON.stringify(newUser));
+                
+                // Show success message and redirect
+                alert('Account created successfully! Welcome to Quanta.');
+                window.location.href = '../index.html';
+            });
+        });
+    </script>
+</body>
+</html>

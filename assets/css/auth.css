@@ -1,0 +1,220 @@
+/* 
+ * Quanta - Physics Education Platform
+ * Authentication Pages Styles (Login & Signup)
+ */
+
+ .auth-container {
+    max-width: 400px;
+    margin: var(--spacing-xxl) auto;
+}
+
+.auth-form {
+    background-color: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.auth-form h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--secondary-color);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+}
+
+.auth-links a {
+    color: var(--primary-color);
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-normal);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--white);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.form-text {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-small);
+    color: var(--gray-600);
+}
+
+.form-link {
+    font-size: var(--font-size-small);
+    color: var(--primary-color);
+}
+
+.form-link:hover {
+    text-decoration: underline;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+}
+
+.checkbox-text {
+    flex: 1;
+}
+
+.checkbox-text a {
+    color: var(--primary-color);
+}
+
+.checkbox-text a:hover {
+    text-decoration: underline;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: var(--spacing-lg) 0;
+    color: var(--gray-500);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--gray-300);
+}
+
+.auth-divider span {
+    padding: 0 var(--spacing-sm);
+}
+
+.social-login {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    background-color: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.social-btn:hover {
+    background-color: var(--gray-100);
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: var(--spacing-sm);
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: var(--spacing-sm);
+}
+
+.error-message {
+    color: var(--danger-color);
+    background-color: rgba(220, 53, 69, 0.1);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-md);
+    display: none;
+}
+
+.success-message {
+    color: var(--success-color);
+    background-color: rgba(40, 167, 69, 0.1);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-md);
+    display: none;
+}
+
+/* Dark mode adjustments */
+.dark-mode .auth-form {
+    background-color: var(--gray-800);
+}
+
+.dark-mode .form-control {
+    background-color: var(--gray-700);
+    color: var(--white);
+    border-color: var(--gray-600);
+}
+
+.dark-mode .form-text,
+.dark-mode .auth-divider {
+    color: var(--gray-400);
+}
+
+.dark-mode .auth-divider::before,
+.dark-mode .auth-divider::after {
+    background-color: var(--gray-600);
+}
+
+.dark-mode .social-btn {
+    background-color: var(--gray-700);
+    border-color: var(--gray-600);
+}
+
+.dark-mode .social-btn:hover {
+    background-color: var(--gray-600);
+}
+
+.dark-mode .error-message {
+    background-color: rgba(220, 53, 69, 0.2);
+}
+
+.dark-mode .success-message {
+    background-color: rgba(40, 167, 69, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .social-login {
+        flex-direction: column;
+    }
+}

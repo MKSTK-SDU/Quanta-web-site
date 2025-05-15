@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Quanta Physics Education Platform</title>
+    <meta name="description" content="Log in to access Quanta's physics education resources, discussions, and exam preparation tools.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">Quanta</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="library.html">Library</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="exam-prep.html">Exams</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="library.html">Library</a></li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="exam-prep.html">Exams</a></li>
+            <li><a href="login.html" class="active">Login</a></li>
+        </ul>
+    </div>
+    
+    <main class="auth-container">
+        <div class="auth-form">
+            <h1>Login to Quanta</h1>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <div class="text-right mt-sm">
+                        <a href="#" class="form-link">Forgot password?</a>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Log In</button>
+                </div>
+            </form>
+            
+            <div class="auth-links">
+                <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-copyright">
+                <p>&copy; 2024 Quanta Physics Education Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // Basic validation
+                if (!isValidEmail(email)) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+                
+                // In a real app, this would send a request to the server
+                // For this demo, we'll use mock authentication
+                
+                // Find a matching user
+                const matchingUser = usersData.find(user => user.email === email);
+                
+                if (matchingUser && password === 'password') { // Demo password is always 'password'
+                    // Store user in localStorage
+                    localStorage.setItem('user', JSON.stringify(matchingUser));
+                    
+                    // Redirect to home page
+                    window.location.href = '../index.html';
+                } else {
+                    alert('Invalid email or password');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanta - Physics Education Platform</title>
+    <meta name="description" content="Quanta is an AI-enhanced online platform revolutionizing physics education through collaborative learning, interactive resources, and exam preparation tools.">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo-link">
+                <img src="images/logo.png" alt="Quanta Physics" class="logo-img"></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="pages/library.html">Library</a></li>
+                    <li><a href="pages/forum.html">Forum</a></li>
+                    <li><a href="pages/exam-prep.html">Exams</a></li>
+                    <li><a href="pages/profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <a href="pages/login.html" class="btn btn-primary">Login</a>
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pages/library.html">Library</a></li>
+            <li><a href="pages/forum.html">Forum</a></li>
+            <li><a href="pages/exam-prep.html">Exams</a></li>
+            <li><a href="pages/profile.html">Profile</a></li>
+            <li><a href="pages/login.html">Login</a></li>
+        </ul>
+    </div>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Master Physics with AI-Enhanced Learning</h1>
+            <p>Quanta is an AI-enhanced platform revolutionizing physics education through collaborative learning, interactive resources, and adaptive exam preparation.</p>
+            <a href="pages/signup.html" class="btn btn-primary">Get Started</a>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Discover the Quanta Experience</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Interactive Resource Library</h3>
+                    <p>Access a comprehensive collection of physics resources including textbooks, videos, simulations, and problem sets. All content is curated and rated by experts and peers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>LaTeX-Supported Forum</h3>
+                    <p>Engage in meaningful discussions with peers and experts using full LaTeX support for equations and formulas. Get your physics questions answered with precision.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI-Powered Exam Preparation</h3>
+                    <p>Prepare for exams with our adaptive question bank. Our AI analyzes your performance and suggests questions tailored to strengthen your weak areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="resources">
+        <div class="container">
+            <h2 class="section-title">Explore Physics Resources</h2>
+            
+            <div class="resource-filters">
+                <div class="filter-group">
+                    <label for="category-filter" class="filter-label">Category</label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="mechanics">Mechanics</option>
+                        <option value="quantum">Quantum Physics</option>
+                        <option value="electromagnetism">Electromagnetism</option>
+                        <option value="thermodynamics">Thermodynamics</option>
+                        <option value="relativity">Relativity</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="type-filter" class="filter-label">Resource Type</label>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="book">Books</option>
+                        <option value="video">Videos</option>
+                        <option value="simulation">Simulations</option>
+                        <option value="article">Articles</option>
+                        <option value="problem-set">Problem Sets</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="difficulty-filter" class="filter-label">Difficulty</label>
+                    <select id="difficulty-filter" class="filter-select">
+                        <option value="all">All Difficulties</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="resource-grid" class="resource-grid">
+                <!-- Resources will be populated dynamically via JavaScript -->
+            </div>
+            
+            <div class="section-cta">
+                <a href="pages/library.html" class="btn btn-secondary">View All Resources</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="discussions">
+        <div class="container">
+            <h2 class="section-title">Recent Physics Discussions</h2>
+            <div id="discussions-container" class="discussions-grid">
+                <!-- Discussions will be populated dynamically via JavaScript -->
+            </div>
+            
+            <div class="section-cta">
+                <a href="pages/forum.html" class="btn btn-secondary">Join the Conversation</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Excel in Physics?</h2>
+            <p>Join thousands of students who have improved their understanding of physics concepts with Quanta.</p>
+            <a href="pages/signup.html" class="btn btn-primary">Sign Up Now</a>
+        </div>
+    </section>
+    
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-copyright">
+                <p>&copy; 2024 Quanta Physics Education Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Homepage specific initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load featured resources (limit to 6)
+            const featuredResources = resourcesData.slice(0, 6);
+            renderResources(featuredResources, 'resource-grid');
+            
+            // Load recent discussions (limit to 3)
+            const recentDiscussions = discussionsData.slice(0, 3);
+            renderDiscussions(recentDiscussions, 'discussions-container');
+            
+            // Set up filter event listeners
+            document.getElementById('category-filter').addEventListener('change', filterHomeResources);
+            document.getElementById('type-filter').addEventListener('change', filterHomeResources);
+            document.getElementById('difficulty-filter').addEventListener('change', filterHomeResources);
+        });
+        
+        // Filter resources on homepage
+        function filterHomeResources() {
+            const category = document.getElementById('category-filter').value;
+            const type = document.getElementById('type-filter').value;
+            const difficulty = document.getElementById('difficulty-filter').value;
+            
+            let filteredResources = [...resourcesData];
+            
+            if (category !== 'all') {
+                filteredResources = filteredResources.filter(resource => resource.category === category);
+            }
+            
+            if (type !== 'all') {
+                filteredResources = filteredResources.filter(resource => resource.type === type);
+            }
+            
+            if (difficulty !== 'all') {
+                filteredResources = filteredResources.filter(resource => resource.difficulty === difficulty);
+            }
+            
+            // Limit to 6 resources for homepage
+            filteredResources = filteredResources.slice(0, 6);
+            renderResources(filteredResources, 'resource-grid');
+        }
+    </script>
+</body>
+</html>
